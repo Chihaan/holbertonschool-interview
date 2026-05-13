@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 """Triangle Pascal"""
 
+
 def pascal_triangle(n):
     """Triangle Pascal"""
     triangle = []
     if n <= 0:
-        return  triangle
+        return triangle
     triangle = [[1]]
     for i in range(1, n):
         prev_line = triangle[-1]
