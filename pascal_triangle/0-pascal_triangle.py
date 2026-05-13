@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-
-
+"""Triangle Pascal"""
 
 def pascal_triangle(n):
+    """Triangle Pascal"""
     triangle = []
     if n <= 0:
         return  triangle
