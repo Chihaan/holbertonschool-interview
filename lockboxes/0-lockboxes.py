@@ -3,7 +3,7 @@
 
 
 def canUnlockAll(boites):
-"""Start of the function"""
+    """Start of the function"""
     # Une liste de boites a explorer en partant de 0 ouverte
     a_explorer = [0]
     # Une liste des boites où je suis allé
