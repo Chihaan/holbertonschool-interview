@@ -15,7 +15,7 @@ def canUnlockAll(boites):
         boite = a_explorer.pop()
         # Je vais a la boite de ma clef
         for clef in boites[boite]:
-            # Si cette boite n'est pas dans mes boites ouvertes 
+            # Si cette boite n'est pas dans mes boites ouvertes
             if clef not in boites_ouvertes:
                 # Je l'ajoute a ma liste de boite a ouvrir
                 a_explorer.append(clef)
