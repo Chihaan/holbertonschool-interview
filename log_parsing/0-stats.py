@@ -1,36 +1,30 @@
 #!/usr/bin/python3
-"""Lit des lignes de log sur stdin et affiche des métriques cumulées.
-
-Format attendu par ligne :
-    <IP> - [<date>] "GET /projects/260 HTTP/1.1" <status> <size>
-Les lignes hors format sont ignorées. Les statistiques (taille totale
-et nombre de lignes par code HTTP) sont affichées tous les 10 lignes
-et à l'interruption clavier (CTRL+C).
-"""
+"""Lit des lignes de log sur stdin et affiche des métriques cumulées."""
 
 import sys
 
 
 def parse(line):
-    """Extrait (status, size) d'une ligne, ou None si elle est invalide.
+    """Retourne (status, size) pour une ligne, ou None si inexploitable.
 
-    On ne valide que les deux derniers champs (les seuls utilisés) :
-    le code HTTP et la taille doivent être des entiers.
+    La taille (dernier champ) doit être un entier, sinon la ligne est
+    ignorée. Le statut (avant-dernier champ) vaut None s'il n'est pas un
+    entier : la taille est alors comptée mais aucun code ne l'est.
     """
     parts = line.split()
     try:
-        status = int(parts[-2])
         size = int(parts[-1])
     except (ValueError, IndexError):
         return None
+    try:
+        status = int(parts[-2])
+    except (ValueError, IndexError):
+        status = None
     return status, size
 
 
 def display_logs(counts, total_size):
-    """Affiche la taille totale puis le nb de lignes par code (croissant).
-
-    Les codes jamais rencontrés (compteur à 0) sont ignorés.
-    """
+    """Affiche la taille totale puis le nb de lignes par code (croissant)."""
     print(f"File size: {total_size}")
     for code in sorted(counts):
         if counts[code] == 0:
@@ -39,7 +33,7 @@ def display_logs(counts, total_size):
 
 
 def main():
-    """Lit stdin, accumule les métriques, affiche tous les 10 + EOF + CTRL+C."""
+    """Lit stdin et affiche les métriques (tous les 10, EOF, CTRL+C)."""
     count = 0
     total_size = 0
     counts = {200: 0, 301: 0, 400: 0, 401: 0,
@@ -51,9 +45,9 @@ def main():
             res = parse(line.strip())
             if res is not None:
                 status, size = res
+                total_size += size
                 if status in counts:
                     counts[status] += 1
-                total_size += size
             if count % 10 == 0:
                 display_logs(counts, total_size)
     except KeyboardInterrupt:
@@ -61,6 +55,7 @@ def main():
         raise
     else:
         display_logs(counts, total_size)
+
 
 if __name__ == "__main__":
     main()
