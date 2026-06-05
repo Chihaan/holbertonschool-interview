@@ -39,7 +39,7 @@ def display_logs(counts, total_size):
 
 
 def main():
-    """Lit stdin, accumule les métriques, affiche tous les 10 + sur CTRL+C."""
+    """Lit stdin, accumule les métriques, affiche tous les 10 + EOF + CTRL+C."""
     count = 0
     total_size = 0
     counts = {200: 0, 301: 0, 400: 0, 401: 0,
@@ -52,13 +52,15 @@ def main():
             if res is not None:
                 status, size = res
                 if status in counts:
-                    counts[status] += 1        # dict pré-rempli -> pas de KeyError
+                    counts[status] += 1
                 total_size += size
-            if count % 10 == 0:        # bilan tous les 10 lignes
+            if count % 10 == 0:
                 display_logs(counts, total_size)
-    except KeyboardInterrupt:          # CTRL+C -> dernier bilan
+    except KeyboardInterrupt:
         display_logs(counts, total_size)
-
+        raise
+    else:
+        display_logs(counts, total_size)
 
 if __name__ == "__main__":
     main()
