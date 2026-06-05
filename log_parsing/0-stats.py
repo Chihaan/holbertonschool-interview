@@ -49,12 +49,11 @@ def main():
         for line in sys.stdin:
             count += 1
             res = parse(line.strip())
-            if res is None:
-                continue
-            status, size = res
-            if status in counts:
-                counts[status] += 1        # dict pré-rempli -> pas de KeyError
-            total_size += size
+            if res is not None:
+                status, size = res
+                if status in counts:
+                    counts[status] += 1        # dict pré-rempli -> pas de KeyError
+                total_size += size
             if count % 10 == 0:        # bilan tous les 10 lignes
                 display_logs(counts, total_size)
     except KeyboardInterrupt:          # CTRL+C -> dernier bilan
