@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """UTF-8 Validator"""
 
+
 def validUTF8(data):
     """Checks if data sent is UTF8 validated"""
 
@@ -18,5 +19,5 @@ def validUTF8(data):
             cpt -= 1
         else:
             return False
-        
+
     return cpt == 0
