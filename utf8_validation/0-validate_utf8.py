@@ -7,6 +7,7 @@ def validUTF8(data):
 
     cpt = 0
     for nb in data:
+        nb = nb & 0xFF
         if cpt == 0 and nb >> 7 == 0b0:
             cpt = 0
         elif cpt == 0 and nb >> 5 == 0b110:
