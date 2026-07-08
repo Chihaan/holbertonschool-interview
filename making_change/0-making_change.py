@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-"""Making change"""
+"""Determine the fewest number of coins needed"""
 
 
 def makeChange(coins, total):
-    """determine the fewest number of coins needed"""
+    """Coins needed to meet a given amount total"""
     if total <= 0:
         return 0
 
@@ -15,4 +15,3 @@ def makeChange(coins, total):
                 dp[amount] = dp[amount - coin] + 1
 
     return dp[total] if dp[total] != float('inf') else - 1
-
