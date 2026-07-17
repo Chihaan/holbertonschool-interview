@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Determines which player wins the Prime Game """
 
+
 def isWinner(x, nums):
     """ Function Prime Game """
     mx = max(nums)
