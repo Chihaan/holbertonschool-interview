@@ -4,6 +4,8 @@
 
 def isWinner(x, nums):
     """ Function Prime Game """
+    if not nums or x < 1 or x != len(nums):
+        return None
     mx = max(nums)
     is_prime = [True] * (mx + 1)
     is_prime[0] = False
